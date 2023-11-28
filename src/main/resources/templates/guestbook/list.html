@@ -3,6 +3,9 @@
 <th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
     <th:block th:fragment="content">
         <h1 class="modal-title">GuestBook List Page</h1>
+        <span>
+            <a th:href="@{/guestbook/register}"><button type="button" class="btn btn-primary">REGISTER</button></a>
+        </span>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -14,7 +17,7 @@
             </thead>
             <tbody>
             <tr th:each="dto : ${result.dtoList}">
-                <th scope="row">[[${dto.gno}]]</th>
+                <th scope="row"><a th:href="@{/guestbook/read(gno = ${dto.gno}, page= ${result.page})}">[[${dto.gno}]]</a></th>
                 <td>[[${dto.title}]]</td>
                 <td>[[${dto.writer}]]</td>
                 <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
@@ -41,6 +44,34 @@
         </nav>
         </div>
 
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
+        <script th:inline="javascript">
+            var msg = [[${msg}]]
+            console.log(msg);
+            if (msg) {
+                $(".modal").modal();
+            }
+        </script>
     </th:block>
 </th:block>
 </html>

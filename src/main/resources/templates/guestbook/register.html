@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <h1 class="modal-title">GuestBook Register Page</h1>
+        <form th:action="@{/guestbook/register}" th:method="post">
+            <div class="form-group">
+                <label>제목</label>
+                <input type="text" th:class="form-control" name="title" placeholder="Enter Title">
+            </div>
+            <div class="form-group">
+                <label>내용</label>
+                <textarea th:class="form-control" rows="5" name="content"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="text" th:class="form-control" name="writer" placeholder="Enter Writer">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-defalut">등록</button>
+                <button type="reset" class="btn btn-defalut">Reset</button>
+            </div>
+        </form>
+    </th:block>
+</th:block>
+</html>
