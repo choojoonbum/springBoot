@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
     <th:block th:fragment="content">
-        <h1 class="modal-title">GuestBook Read Page</h1>
+        <h1 class="modal-title">Board Read Page</h1>
         <div class="form-group">
-            <label>Gno</label>
-            <input type="text" th:class="form-control" name="gno" th:value="${dto.gno}" readonly>
+            <label>Bno</label>
+            <input type="text" th:class="form-control" name="bno" th:value="${dto.bno}" readonly>
         </div>
         <div class="form-group">
             <label>제목</label>
@@ -16,8 +16,8 @@
             <textarea th:class="form-control" rows="5" name="content" readonly>[[${dto.content}]]</textarea>
         </div>
         <div class="form-group">
-            <label>작성자</label>
-            <input type="text" th:class="form-control" name="writer" th:value="${dto.writer}" readonly>
+            <label>작성자 이름</label>
+            <input type="text" th:class="form-control" name="writer" th:value="${dto.writerName}" readonly>
         </div>
         <div class="form-group">
             <label>등록일</label>
@@ -28,8 +28,8 @@
             <input type="text" th:class="form-control" th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
         </div>
         <div class="form-group">
-            <a th:href="@{/guestbook/modify(gno = ${dto.gno}, page = ${requestDTO.page}, keyword=${requestDTO.keyword}, type=${requestDTO.type})}"><button type="button" class="btn btn-primary">Modify</button></a>
-            <a th:href="@{/guestbook/list(page = ${requestDTO.page, keyword=${requestDTO.keyword}, type=${requestDTO.type})}"><button type="button" class="btn btn-info">List</button></a>
+           <a th:href="@{/board/modify(bno = ${dto.bno}, page = ${requestDTO.page}, keyword=${requestDTO.keyword}, type=${requestDTO.type})}"><button type="button" class="btn btn-primary">Modify</button></a>
+           <a th:href="@{/board/list(page = ${requestDTO.page}, keyword=${requestDTO.keyword}, type=${requestDTO.type})}"><button type="button" class="btn btn-info">List</button></a>
         </div>
     </th:block>
 </th:block>
