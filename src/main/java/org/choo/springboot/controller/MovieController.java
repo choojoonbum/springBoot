@@ -3,8 +3,10 @@ package org.choo.springboot.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.choo.springboot.dto.MovieDTO;
+import org.choo.springboot.dto.PageRequestDTO;
 import org.choo.springboot.service.MovieService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,5 +30,11 @@ public class MovieController {
         Long mno = movieService.register(movieDTO);
         redirectAttributes.addFlashAttribute("msg", mno);
         return "redirect:/movie/list";
+    }
+
+    @GetMapping("/list")
+    public void list(PageRequestDTO pageRequestDTO, Model model) {
+        log.info("pageRequestDTO: " + pageRequestDTO);
+        model.addAttribute("result", movieService.getList(pageRequestDTO));
     }
 }

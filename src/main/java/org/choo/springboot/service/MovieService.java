@@ -2,6 +2,8 @@ package org.choo.springboot.service;
 
 import org.choo.springboot.dto.MovieDTO;
 import org.choo.springboot.dto.MovieImageDTO;
+import org.choo.springboot.dto.PageRequestDTO;
+import org.choo.springboot.dto.PageResultDTO;
 import org.choo.springboot.entity.Movie;
 import org.choo.springboot.entity.MovieImage;
 
@@ -12,6 +14,7 @@ import java.util.stream.Collectors;
 
 public interface MovieService {
     Long register(MovieDTO movieDTO);
+    PageResultDTO<MovieDTO, Object[]> getList(PageRequestDTO requestDTO);
 
     default Map<String, Object> dtoToEntity(MovieDTO movieDTO) {
         Map<String, Object> entityMap = new HashMap<>();
@@ -28,5 +31,21 @@ public interface MovieService {
             entityMap.put("imgList", movieImageList);
         }
         return entityMap;
+    }
+
+    default MovieDTO entitiesToDTO(Movie movie, List<MovieImage> movieImages, Double avg, Long reviewCnt) {
+        MovieDTO movieDTO = MovieDTO.builder().mno(movie.getMno())
+                .title(movie.getTitle()).regDate(movie.getRegDate()).modDate(movie.getModDate()).build();
+
+        List<MovieImageDTO> movieImageDTOList = movieImages.stream().map(movieImage -> {
+            return MovieImageDTO.builder().imgName(movieImage.getImgName())
+                    .path(movieImage.getPath()).uuid(movieImage.getUuid()).build();
+        }).collect(Collectors.toList());
+
+        movieDTO.setImageDTOList(movieImageDTOList);
+        movieDTO.setAvg(avg);
+        movieDTO.setReviewCnt(reviewCnt.intValue());
+
+        return movieDTO;
     }
 }
