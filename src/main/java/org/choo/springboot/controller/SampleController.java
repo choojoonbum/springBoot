@@ -2,6 +2,7 @@ package org.choo.springboot.controller;
 
 import lombok.extern.log4j.Log4j2;
 import org.choo.springboot.dto.SampleDTO;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,6 +50,21 @@ public class SampleController {
     @GetMapping({"/exLayout1","/exLayout2","/exTemplate","/exSidebar"})
     public void exLayout1(){
         log.info("exLayout.....");
+    }
+
+    @GetMapping("/all")
+    public void exAll() {
+        log.info("exAll............");
+    }
+
+    @GetMapping("/member")
+    public void exMember() {
+        log.info("exMember............");
+    }
+
+    @GetMapping("/admin")
+    public void exAdmin() {
+        log.info("exAdmin............");
     }
 
 
