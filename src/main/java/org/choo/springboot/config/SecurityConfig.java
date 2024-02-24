@@ -19,7 +19,7 @@ public class SecurityConfig {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+/*
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
         UserDetails user = User.builder().username("user1").password(passwordEncoder().encode("1111")).roles("USER").build();
@@ -28,7 +28,7 @@ public class SecurityConfig {
 
         return new InMemoryUserDetailsManager(user);
     }
-
+*/
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests(auth -> {
