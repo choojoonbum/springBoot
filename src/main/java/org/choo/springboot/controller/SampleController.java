@@ -67,5 +67,15 @@ public class SampleController {
         log.info("exAdmin............");
     }
 
+    //    @GetMapping("/member")
+//    public void exMember(@AuthenticationPrincipal ClubAuthMemberDTO clubAuthMember){
+//
+//        log.info("exMember..........");
+//
+//        log.info("-------------------------------");
+//        log.info(clubAuthMember);
+//
+//    }
+
 
 }
