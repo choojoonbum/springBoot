@@ -39,6 +39,8 @@ public class SecurityConfig {
         http.csrf().disable();
         http.logout();
 
+        http.oauth2Login();
+
         return http.build();
     }
 }
