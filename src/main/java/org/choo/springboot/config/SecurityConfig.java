@@ -1,6 +1,7 @@
 package org.choo.springboot.config;
 
 import lombok.extern.log4j.Log4j2;
+import org.choo.springboot.security.handler.ClubLoginSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -39,8 +40,13 @@ public class SecurityConfig {
         http.csrf().disable();
         http.logout();
 
-        http.oauth2Login();
+        http.oauth2Login().successHandler(successHandler());
 
         return http.build();
+    }
+
+    @Bean
+    public ClubLoginSuccessHandler successHandler() {
+        return new ClubLoginSuccessHandler(passwordEncoder());
     }
 }
