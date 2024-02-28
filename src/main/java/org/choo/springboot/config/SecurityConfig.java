@@ -3,6 +3,7 @@ package org.choo.springboot.config;
 import lombok.extern.log4j.Log4j2;
 import org.choo.springboot.security.filter.ApiCheckFilter;
 import org.choo.springboot.security.filter.ApiLoginFilter;
+import org.choo.springboot.security.handler.ApiLoginFailHandler;
 import org.choo.springboot.security.handler.ClubLoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -73,6 +74,7 @@ public class SecurityConfig {
 
         ApiLoginFilter apiLoginFilter =  new ApiLoginFilter("/api/login");
         apiLoginFilter.setAuthenticationManager(authenticationManager);
+        apiLoginFilter.setAuthenticationFailureHandler(new ApiLoginFailHandler());
 
         return apiLoginFilter;
     }
