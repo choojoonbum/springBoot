@@ -5,6 +5,7 @@ import org.choo.springboot.security.filter.ApiCheckFilter;
 import org.choo.springboot.security.filter.ApiLoginFilter;
 import org.choo.springboot.security.handler.ApiLoginFailHandler;
 import org.choo.springboot.security.handler.ClubLoginSuccessHandler;
+import org.choo.springboot.security.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -72,7 +73,7 @@ public class SecurityConfig {
 
     public ApiLoginFilter apiLoginFilter(AuthenticationManager authenticationManager) throws Exception{
 
-        ApiLoginFilter apiLoginFilter =  new ApiLoginFilter("/api/login");
+        ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/api/login", jwtUtil());
         apiLoginFilter.setAuthenticationManager(authenticationManager);
         apiLoginFilter.setAuthenticationFailureHandler(new ApiLoginFailHandler());
 
@@ -87,6 +88,11 @@ public class SecurityConfig {
 
     @Bean
     public ApiCheckFilter apiCheckFilter() {
-        return new ApiCheckFilter("/notes/**/*");
+        return new ApiCheckFilter("/notes/**/*", jwtUtil());
+    }
+
+    @Bean
+    public JWTUtil jwtUtil() {
+        return new JWTUtil();
     }
 }

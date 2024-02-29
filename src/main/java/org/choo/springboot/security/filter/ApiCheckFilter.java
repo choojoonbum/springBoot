@@ -2,6 +2,7 @@ package org.choo.springboot.security.filter;
 
 import lombok.extern.log4j.Log4j2;
 import net.minidev.json.JSONObject;
+import org.choo.springboot.security.util.JWTUtil;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -18,10 +19,12 @@ public class ApiCheckFilter extends OncePerRequestFilter {
 
     private AntPathMatcher antPathMatcher;
     private String pattern;
+    private JWTUtil jwtUtil;
 
-    public ApiCheckFilter(String pattern) {
-        this.pattern = pattern;
+    public ApiCheckFilter(String pattern, JWTUtil jwtUtil) {
         this.antPathMatcher = new AntPathMatcher();
+        this.pattern = pattern;
+        this.jwtUtil = jwtUtil;
     }
 
     @Override
@@ -62,11 +65,17 @@ public class ApiCheckFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
 
-        if(StringUtils.hasText(authHeader)){
+        if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
             log.info("Authorization exist: " + authHeader);
-            if (authHeader.equals("12345678")) {
-                checkResult = true;
+
+            try {
+                String email = jwtUtil.validateAndExtract(authHeader.substring(7));
+                log.info("Validate result: " + email);
+                checkResult = email.length() > 0;
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
         }
 
         return checkResult;
